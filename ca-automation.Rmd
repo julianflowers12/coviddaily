@@ -1,0 +1,175 @@
+---
+title: "Automating daily bulletins"
+subtitle: Using R Markdown
+output:
+  html_document: default
+  slidy_presentation: default
+  powerpoint_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+```
+
+## Automation
+
+* Getting computers to perform manual repetitive tasks
+* Performing processes (e.g. robotic process automation)
+* Getting computers to undertake error prone tasks (e.g. cutting and pasting)
+* Getting computers to deal with lots of data
+* Getting computers to learn how we do it... (machine learning, RPA)
+* Benefits
+    + Freeing up expensive time
+    + Less error prone
+    + Human in the loop
+    + Scale and speed
+
+## Automation and data science
+
+* Automation needs code
+    + Can be simple rules-based e.g. IFTTT
+    + Or hugely complex e.g. indicator automation
+* Central indicator automation programme
+    + A *pipeline* for generating, quality assuring, disclosure controlling and publishing indicator data
+* A series of R packages which take 
+    + a data definition
+    + Extract the data from the datalake or other sources
+    + Perform the indicator calculation
+    + Convert the output to a publication format
+    + Present the data for QA
+    + Carry out disclosure control if necessary
+    + Controlled by a single master fuction which can be scheduled, triggered when data is updated, inform users etc.
+* Effectively replacing a set of processes which has taken 10s of people doing number crunching, manual QA, and labour intensive processing with a handful designing indicators, modifying scripts and managing the process    
+
+## Automation and literature searching/ review/ reporting
+
+* What can be automated?
+    * Literature search
+    * Title and abstract filtering
+    * Abstract classification
+    * Data extraction 
+    * Abstract summarisation
+    * Keyword generation
+    
+## Techniques
+
+* Data extraction via APIs
+* Text mining
+* Natural language processing
+* Cluster analysis and topic modelling (unsupervised machine learning)
+* Classification (supervised machine learning)
+
+## Cluster labels
+
+|                                                                  | Sensitivity| Balanced.Accuracy|
+|:----------------------------------------------------------------|-----------:|-----------------:|
+|Class: ace2-express-cov-2-sar                                    |   0.8333333|         0.9135514|
+|Class: aerosol-droplet-respiratori-covid-19                      |          NA|                NA|
+|Class: antibodi-cov-sar-2-19                                     |   0.8550725|         0.9252926|
+|Class: arb-angiotensin-inhibitor-blocker-receptor-studi-19-covid |          NA|                NA|
+|Class: bcg-vaccin-countri-covid-19                               |          NA|                NA|
+|Class: cancer-patient-background-covid-19-result                 |          NA|                NA|
+|Class: cell-cov-sar-2-infect-19-covid                            |          NA|                NA|
+|Class: cell-immun-patient-2-19-covid                             |   1.0000000|         0.9969287|
+|Class: children-adult-infect-19-covid                            |          NA|                NA|
+|Class: counti-level-data-covid-19                                |          NA|                NA|
+|Class: cov-sar-2-19-covid                                        |          NA|                NA|
+|Class: death-rate-2020-covid-19                                  |   0.5555556|         0.7697531|
+|Class: detect-test-cov-sar-2                                     |   0.8085106|         0.9020429|
+|Class: distanc-social-model-covid-19                             |   0.8333333|         0.9086568|
+|Class: drug-cov-sar-2-19                                         |   0.7916667|         0.8911604|
+|Class: epidem-measur-popul-model-infect-19-covid                 |          NA|                NA|
+|Class: epitop-vaccin-cov-sar-2                                   |   1.0000000|         0.9960000|
+|Class: fatal-estim-rate-19-covid                                 |   0.7619048|         0.8781539|
+|Class: genom-sequenc-cov-sar-2                                   |   0.6551724|         0.8228987|
+|Class: human-cov-sar-2-viru-infect                               |          NA|                NA|
+|Class: icu-care-model-covid-19                                   |   0.7500000|         0.8700769|
+|Class: imag-patient-covid-19-result                              |   1.0000000|         0.9965582|
+|Class: incub-period-dai-estim-19-covid                           |          NA|                NA|
+|Class: india-model-data-covid-19                                 |          NA|                NA|
+|Class: infect-data-result-covid-19                               |   0.4257529|         0.6715851|
+|Class: lockdown-measur-model-covid-19                            |   0.7142857|         0.8525189|
+|Class: mask-respir-n95-covid-19                                  |   0.9473684|         0.9736842|
+|Class: mental-health-result-19-covid                             |   0.8571429|         0.9260946|
+|Class: model-predict-data-covid-19                               |   0.5555556|         0.7670455|
+|Class: mutat-genom-cov-sar-2                                     |          NA|                NA|
+|Class: ncov-sequenc-2019-bat-genom-coronaviru                    |          NA|                NA|
+|Class: npi-intervent-effect-model-covid-19                       |          NA|                NA|
+|Class: patient-studi-covid-19-result                             |   0.6977778|         0.8328632|
+|Class: pollut-air-china-covid-19                                 |          NA|                NA|
+|Class: pregnant-women-infect-covid-19                            |          NA|                NA|
+|Class: protein-spike-cov-sar-2                                   |   0.8888889|         0.9342593|
+|Class: reproduct-estim-model-19-covid                            |   0.0000000|         0.4932432|
+|Class: studi-data-19-covid-result                                |   0.6666667|         0.8271490|
+|Class: survei-studi-19-covid-result                              |   0.8000000|         0.8944581|
+|Class: swab-test-cov-sar-2-19-covid                              |          NA|                NA|
+|Class: temperatur-humid-studi-data-covid-19                      |   0.9333333|         0.9626394|
+|Class: test-2-infect-19-covid                                    |   0.7857143|         0.8866652|
+|Class: test-patient-posit-2-result-19-covid                      |   0.0000000|         0.4984634|
+|Class: trace-contact-model-covid-19                              |          NA|                NA|
+|Class: trial-treatment-studi-result-covid-19                     |   0.8888889|         0.9391682|
+|Class: worker-infect-result-19-covid                             |   0.6666667|         0.8287123|
+|Class: wuhan-china-epidem-covid-19                               |   0.6000000|         0.7938424|
+
+
+
+## CORD19 
+
+* https://www.semanticscholar.org/paper/CORD-19%3A-The-Covid-19-Open-Research-Dataset-Wang-Lo/bc411487f305e451d7485e53202ec241fcc97d3b
+
+> The Covid-19 Open Research Dataset (CORD-19) is a growing resource of scientific papers on Covid-19 and related historical coronavirus research. CORD-19 is designed to facilitate the development of text mining and information retrieval systems over its rich collection of metadata and structured full text papers. Since its release, CORD-19 has been downloaded over 75K times and has served as the basis of many Covid-19 text mining and discovery systems. In this article, we describe the mechanics of dataset construction, highlighting challenges and key design decisions, provide an overview of how CORD-19 has been used, and preview tools and upcoming shared tasks built around the dataset. We hope this resource will continue to bring together the computing community, biomedical experts, and policy makers in the search for effective treatments and management policies for Covid-19.
+
+## Classifying abstracts
+
+* Two approaches
+* Unsupervised - clustering and topic modelling
+* Clustering - 
+    + convert abstracts to wourd counts and let computer group abstracts on how similar they are
+    + Generates clusters and automatic labels
+* Topic modelling
+   + Similar
+   + Identifies groups of words within and between documents
+* Supervised - machine learning
+   + Use clusters to "train a model" so that new data can be labelled
+   + Use expert labelling to train e.g. Nicola's work
+    
+## medRxiv clusters
+
+* Clustering is a technique for grouping abstracts based on similarity
+* The method we use is based on https://pubmed.ncbi.nlm.nih.gov/30875428/  and `adjutant` R package 
+* The steps are:
+    + Clean abstracts - remove numbers, punctuation and stopwords^[stopwords are frequently used words e.g. *the, a, in, to*]
+    + Split each abstract into words - this process is known as *tokenisation*
+    + Stem words - stemming is a process of reducing words to a stem - eg the stem of *included, includes, including* is *includ*.
+    + Count the frequency of each temmed word in each abstract 
+    + Weight the term frequency by the proportion of abstracts in which the term appears^[This is know as term frequency inverse document frequency weighting or *tf-idf*. It gives more weight to less frequent terms and allows better discrimination betwee document clusters]
+    + Convert to a wide form matrix - each row is an abstract, each column a stemmed word, and each cell contains the tf-idf value)^[This matrix is known as a document term matrix of *dtm*]
+    + We now have a table with many thousands of columns - to enable further processing the next step is to collapse the table into 2 columns
+    + To achieve this we run an algorithm know as tSNE^[t-stochastic neighbourhood embedding]. The details are beyond this note but it is a very efficient method for summarising a 2 dimensional representation of a many dimensional matrix without losing information^[It is an enhanced version of PCA]
+    + This step can take some time depending on the number of abstracts (it can take ~2 hours to process 5000 abstracts) - it outputs a new table in which each row is an abstract, there are 2 columns, and the cell values are summary measures of the abstract contents
+    + The next step is to run a clustering algorithm (eg Kmeans) to look for "clumping" of values. We use th `hdbscan` function in the `dbscan` package in R to perform this step.
+    
+
+##
+    
+```{r}
+
+
+
+```
+    
+    
+    
+
+```{r}
+knitr::include_graphics("medrxiv.png", dpi = 300)
+```
+
+
+
+## Daily reporting
+
+* Can extract recent articles from pubmed, medRxiv and CORD19
+* Can classify using models described above
+
+
