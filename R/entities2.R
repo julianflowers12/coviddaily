@@ -11,6 +11,7 @@ extract_locations <- function(x){
   
   require(spacyr)
   require(dplyr)
+  x <- spacy_parse(x)
   anno <- spacy_extract_entity(x)
   geo <- anno %>%
     filter(str_detect(ent_type, "GPE")) 

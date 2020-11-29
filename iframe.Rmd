@@ -1,0 +1,32 @@
+---
+title: "Untitled"
+author: "Julian Flowers"
+date: "29/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<iframe frameborder="0" style="width:100%;height:583px;" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=flow.png#R5ZpRd5owFMc%2FjY%2FrAaJUX%2Buc62bXntqtzxGvQAuEJUFln34JhCKmreysPYTTPthwSQj5%2BffemwsDNI33c4rT4IqsIRo41no%2FQJ8HjmPbY1f8k5a8tJy7w9Lg03CtOtWGZfgHlNFS1ixcA2t05IREPEybRo8kCXi8YcOUkl2z24ZEzVlT7INmWHo4qqxno9p%2BH655UK3MndQnvkLoB2rysaOWvMLeo09JlqgZBw7aFH%2Fl6RhX11JLZQFek92BCc0GaEoJ4WUr3k8hknQrcNU4nld3O0AXAY8jcWCLZnH6ywuD7TaDxeIoJPxwupeud2X%2Fekjuvtmw2Lh5tGLO9dj%2FpEhscZRVkxzPCmvBWx0SygPikwRHs9p6USAEOY0ljuo%2BC0JSdbMPwHmuxIMzTk4tpVo8yagHr9x%2FpThMfeCv9FMakWs5mECBmgOJgdNcdKAQYR5um4rDSqL%2BU78as2go0v9A3Z58EOz22CjuCH0Q7sgxirutYb%2BDPZczCWw5C5m8vGP9WNzIKyXiIwo5UMwzCsVNbkPYad9U%2FT1IqLtADFmmuOC3E7GuJfMtUA77VyGps66r%2FLmKlE%2F%2BfXcQdSpbcBBwqnFvzrXvbmTUUs5meRHb%2BSDYbdso7iMN%2B%2BLQSzDA1AvCxO%2FcUYycpqNAbteOwj7vuWTHbSXrGiXZsYb9JlvFAmER72YZJamU7s3V1DjRDrsX7bDnorVbp8nIKNXaer42p5Afp2Vw5p8NHDcSK7tYUdHyZevu9vKmlPecEF98BV0LG5knbH0bcg8rSckTAP47gvkRZkzp%2FR34uVbn%2FPSqxW2xSu8R%2B8CepGnF%2BVISBSpsU2lOY69s3V4uCzcs2x4ljFHYdK7UYxfcPWlH9wQ9c8FtE4cKqyEu2Ol97GsN3rDYp6dsqlbhSbcabkJP3AVJOncWx9WI7jcZTt%2BLyRWt05o1q5xc3fcB%2BGUmot42ZDLGGSbU7vMvp%2B91s8pnnhaqWZUz1Pd0ojV4ZFg6oe84fibMHB8xHhrnI56pNuKVGChpWWvMcbnJjbGsOcrtcASYJsXmzYrlU3bWOdVjz2vAfuKZ7IqkoWcOs8nENGZIj%2B7TKGMcqAm17uNfrgG89F9uv4JM9fD2dJAZGhVkUN8fMrQHb9ZTBtT3fLY9eMPyWUcDX77DwEFkBb8z0OMZC3AqmyklHsgy7SkfXb%2Bkdp3xSKYapb3p6N%2FCkxv3egPSi2CqFsOyOMY0ZM%2BXYsxlPDku2nTPWC%2FafId8R6hMcwVsir2eMbYt84Ssp72XyYbQWOm3n6Anoybn8fthFof1a7bFuYO3mdHsLw%3D%3D"></iframe>
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
