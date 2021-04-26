@@ -46,8 +46,7 @@ toc()
 ## Plot abstract frequency
 
 ```{r}
-
-ss$plot_meta
+str(ss)
 
 ```
 
@@ -100,8 +99,9 @@ setDT(ss$sem_class)[, .N, by = .(class, class1)] %>%
 library(stm)
 library(quanteda)
 
-corp1 <- corpus(ss$sem_class, text_field = "abstract")
-dfm1 <- dfm(corp1, remove = stopwords("en"), remove_punct = TRUE, remove_numbers = TRUE, stem = TRUE, remove_symbols = TRUE, ngrams = 1:2)
+corp1 <- corpus(ss, text_field = "abstract")
+corp_samp <- corpus_sample(corp1, 20000)
+dfm1 <- dfm(corp_samp, remove = stopwords("en"), remove_punct = TRUE, remove_numbers = TRUE, stem = TRUE, remove_symbols = TRUE, ngrams = 1:2)
 #dfm1 <- dfm_tfidf(dfm1)
 
 stm <- convert(dfm1, to = "stm")
@@ -111,7 +111,7 @@ stm_m <- prepDocuments(stm$documents, stm$vocab, stm$meta)
 
 ```{r stm-fit}
 
-fit_stm <- stm(stm_m$documents, stm_m$vocab, data = stm_m$meta, K = 30, init.type = "Spectral")
+fit_stm <- stm(stm$documents, stm$vocab, data = stm$meta, K = 30, init.type = "Spectral")
 
 assign_labels <- tidy(fit_stm, "beta") %>%
   group_by(topic) %>%
