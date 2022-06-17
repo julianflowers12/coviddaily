@@ -1,10 +1,17 @@
 ## covid tweets
 
+install.packages("pacman")
+
+library(pacman)
+p_load(hrbrthemes, ggraph, tidygraph)
+
 covid_tweets <- function(){
 
+if(!require(rtweet))install.packages("rtweet")
 library(rtweet)
-library(tidyverse)
-library(lubridate)
+require(tidyverse)
+require(lubridate)
+library(rtweet); library(tidyverse)
 
 q <- "coronavirus.data.gov.uk"
 
@@ -22,26 +29,30 @@ out <- list(plot = plot, tweets = tweets )
 
 ct <- covid_tweets()
 
+ct
+
 ct$tweets$text
 
 ct$plot
 
-select(tweets, hashtags) %>%
-  unnest(cols = c(hashtags)) %>%
+ct$tweets %>% 
+  select(user_id, hashtags) %>%
+  unnest(cols = c("hashtags")) %>%
   mutate(hashtags = tolower(hashtags)) %>%
   count(hashtags, sort=TRUE)
 
-lookup_users(unique(tweets$user_id))
+lookup_users(unique(ct$tweets$user_id))
 
 library(igraph)
 library(hrbrthemes)
 library(ggraph)
 library(tidyverse)
+library(tidygraph)
 
 import_roboto_condensed()
 
 # same as previous recipe
-filter(tweets, retweet_count > 0) %>%
+ct$tweets %>% filter( retweet_count > 0) %>%
   select(screen_name, mentions_screen_name) %>%
   unnest(mentions_screen_name) %>%
   filter(!is.na(mentions_screen_name)) %>%

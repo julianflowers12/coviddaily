@@ -26,7 +26,18 @@ p_load(tidylo, tidyverse, data.table, broom, tidytext)
 
 
 ```{r download-cord19, cache = TRUE}
+semantic_scholar <- function(){
 
+cat("Please wait... file size > 1GB")
+
+library(data.table)
+library(lubridate)
+library(tidyverse)
+
+
+## extract semantic scholar covid data
+metadata <- fread("https://ai2-semanticscholar-cord-19.s3-us-west-2.amazonaws.com/latest/metadata.csv")
+}
 library(tictoc)
 
 source("R/semantic_scholar.R")
@@ -51,27 +62,7 @@ str(ss)
 ```
 
 
-## Cluster frequency
 
-```{r clus_freq, fig.height=4, fig.width=6}
-
-sem_class_count <- ss$sem_class %>%
-  count(class, class1)
-
-sem_odds <- sem_class_count %>%
-  bind_log_odds(class1, class, n, unweighted = TRUE)
-
-
-sem_class_count %>%
-  ggplot(aes(class1, forcats::fct_rev(class), size = n, colour = n)) +
-  geom_point() +
-  viridis::scale_color_viridis(option = "cividis") +
-  scale_x_discrete(position = "top") +
-  ggthemes::theme_fivethirtyeight() +
-  theme(axis.text.x.top = element_text(angle = 90, hjust = .01)) +
-  labs(title = paste("Clustering of ", nrow(ss$sem_class), " COVID-related \nabstracts since 1st Jan 2020"))
-
-```
 
 
 
@@ -100,18 +91,20 @@ library(stm)
 library(quanteda)
 
 corp1 <- corpus(ss, text_field = "abstract")
-corp_samp <- corpus_sample(corp1, 20000)
-dfm1 <- dfm(corp_samp, remove = stopwords("en"), remove_punct = TRUE, remove_numbers = TRUE, stem = TRUE, remove_symbols = TRUE, ngrams = 1:2)
+corp_samp <- corpus_sample(corp1, 200000)
+dfm1 <- tokens_remove(tokens(corp_samp, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE), stopwords("english")) %>% tokens_select(., pattern = c("de", "la"), selection = "remove", valuetype = "regex", case_insensitive = TRUE, padding = FALSE, window = 0, min_nchar = 1, max_nchar = 2, startpos = 1, endpos = 2, verbose = FALSE) 
+dfm1 <- dfm(dfm1)
 #dfm1 <- dfm_tfidf(dfm1)
 
 stm <- convert(dfm1, to = "stm")
 stm_m <- prepDocuments(stm$documents, stm$vocab, stm$meta)
 
-```
+
+```p
 
 ```{r stm-fit}
 
-fit_stm <- stm(stm$documents, stm$vocab, data = stm$meta, K = 30, init.type = "Spectral")
+fit_stm <- stm(stm$documents, stm$vocab, data = stm$meta, K = 50, init.type = "Spectral")
 
 assign_labels <- tidy(fit_stm, "beta") %>%
   group_by(topic) %>%
@@ -133,15 +126,16 @@ assign_topics <- tidy(fit_stm, matrix = "gamma", document_names = stm_m$meta$pub
   slice(1)
 
 assign <- assign_topics %>%
-  left_join(ss$sem_class, by = c("document" = "pubmed_id")) %>%
-  select(title, publish_time, topic, class, class1) %>%
+  left_join(docvars(corp_samp), by = c("document" = "pubmed_id")) %>%
   left_join(topic_labels) %>%
   filter(publish_time > "2020-01-31") %>%
   arrange(desc(publish_time))
 
-head(assign)
+glimpse(assign)
   
-
+assign %>%
+    ungroup() %>%
+    count(topic_label, sort = TRUE)
 ```
 
 ```{r stm-time}

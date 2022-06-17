@@ -2,6 +2,7 @@ trip_searchR <- function(search_term, n = 1000){
 
   require(rvest)
   require(tidyverse)
+  require(xml2)
 
 
   search_url <- url <- paste0("https://www.tripdatabase.com/search/xml?key=PHE31413&criteria=", search_term, "&max=", n)
